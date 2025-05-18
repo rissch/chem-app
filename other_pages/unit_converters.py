@@ -14,8 +14,8 @@ def display_unit_converters():
     if calc == "Mass":
         st.subheader("⚖️ Mass Converter")
         mass = st.number_input("Enter mass", value=1.0)
-        from_unit = st.selectbox("From", ["g", "kg", "mg"])
-        to_unit = st.selectbox("To", ["g", "kg", "mg"])
+        from_unit = st.selectbox("From", ["g", "kg", "mg"], index=1)
+        to_unit = st.selectbox("To", ["g", "kg", "mg"], index=0)
 
         conversion = {"g": 1, "kg": 1000, "mg": 0.001}
         result = mass * conversion[from_unit] / conversion[to_unit]
@@ -24,8 +24,8 @@ def display_unit_converters():
     elif calc == "Volume":
         st.subheader("🧪 Volume Converter")
         volume = st.number_input("Enter volume", value=1.0)
-        from_unit = st.selectbox("From", ["L", "mL", "cm³"])
-        to_unit = st.selectbox("To", ["L", "mL", "cm³"])
+        from_unit = st.selectbox("From", ["L", "mL", "cm³"], index=0)
+        to_unit = st.selectbox("To", ["L", "mL", "cm³"], index=1)
 
         conversion = {"L": 1000, "mL": 1, "cm³": 1}
         result = volume * conversion[from_unit] / conversion[to_unit]
@@ -34,8 +34,8 @@ def display_unit_converters():
     elif calc == "Temperature":
         st.subheader("🌡️ Temperature Converter")
         temp = st.number_input("Enter temperature")
-        from_unit = st.selectbox("From", ["Celsius", "Kelvin", "Fahrenheit"])
-        to_unit = st.selectbox("To", ["Celsius", "Kelvin", "Fahrenheit"])
+        from_unit = st.selectbox("From", ["Celsius", "Kelvin", "Fahrenheit"], index=0)
+        to_unit = st.selectbox("To", ["Celsius", "Kelvin", "Fahrenheit"], index=2)
 
         def convert_temp(value, from_u, to_u):
             if from_u == to_u:
@@ -56,8 +56,8 @@ def display_unit_converters():
     elif calc == "Pressure":
         st.subheader("🧭 Pressure Converter")
         pressure = st.number_input("Enter pressure", value=1.0)
-        from_unit = st.selectbox("From", ["atm", "Pa", "kPa", "mmHg", "bar"])
-        to_unit = st.selectbox("To", ["atm", "Pa", "kPa", "mmHg", "bar"])
+        from_unit = st.selectbox("From", ["atm", "Pa", "kPa", "mmHg", "bar"], index=1)
+        to_unit = st.selectbox("To", ["atm", "Pa", "kPa", "mmHg", "bar"], index=2)
 
         conversion = {
             "atm": 101325,
@@ -73,8 +73,8 @@ def display_unit_converters():
     elif calc == "Energy":
         st.subheader("⚡ Energy Converter")
         energy = st.number_input("Enter energy", value=1.0)
-        from_unit = st.selectbox("From", ["J", "kJ", "cal", "kcal"])
-        to_unit = st.selectbox("To", ["J", "kJ", "cal", "kcal"])
+        from_unit = st.selectbox("From", ["J", "kJ", "cal", "kcal"], index=1)
+        to_unit = st.selectbox("To", ["J", "kJ", "cal", "kcal"], index=3)
 
         conversion = {
             "J": 1,

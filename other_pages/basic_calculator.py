@@ -21,24 +21,31 @@ formulas = df['Formula'].tolist()
 def display_basic_calculator():
     calc = option_menu(
         menu_title="Basic Calculators",
-        options=["Molar Mass", "Stoichiometry", "Molarity", "Molality", "Normality", "PPM"],
-        icons=["flask", "percent", "beaker", "droplet", "scale", "water"],
+        options=[
+        "🧮 Molar Mass",
+        "⚖️ Stoichiometry",
+        "💧 Molarity",
+        "🌡️ Molality",
+        "📏 Normality",
+        "🌊 PPM"
+    ],
+    icons=["none", "none", "none", "none", "none", "none"],
         orientation="horizontal"
     )
     st.header(f"{calc} Calculator")
     # Call corresponding function later here
 
-    if calc == "Molar Mass":
+    if calc == "🧮 Molar Mass":
         molar_mass_calculator()
-    elif calc == "Stoichiometry":
+    elif calc == "⚖️ Stoichiometry":
         stoichiometry_calculator()
-    elif calc == "Molarity":
+    elif calc == "💧 Molarity":
         molarity_calculator()
-    elif calc == "Molality":
+    elif calc == "🌡️ Molality":
         molality_calculator()
-    elif calc == "Normality":
+    elif calc == "📏 Normality":
         normality_calculator()
-    elif calc == "PPM":
+    elif calc == "🌊 PPM":
         ppm_calculator()
 
 def molar_mass_calculator():
@@ -81,14 +88,6 @@ def molar_mass_calculator():
 
                 st.success(f"**Total Molar Mass of {formula} = {total_mass:.3f} g/mol**")
 
-            # # Converting formula to SMILES and generating structure
-            # smiles = formula_to_smiles(formula)
-            # if smiles:
-            #     mol = Chem.MolFromSmiles(smiles)
-            # if mol:
-            #     st.image(Draw.MolToImage(mol), caption=f"Structure of {formula}", use_column_width=True)
-            # else:
-            #     st.error("Could not generate structure for the given formula.")
 
             # Displaying the structure of the compound
             with col2:
@@ -118,8 +117,8 @@ def stoichiometry_calculator():
     if "selected_formula" not in st.session_state:
         st.session_state.selected_formula = ""
 
-    with open("formula_examples.json", "r") as f:
-        eqs_list = json.load(f)
+    with open("ChemicalEquations.json", "r") as f:
+        eqs_list = json.load(f)[0]['formula_examples']
 
     # User input (use full string for now)
     # full_input = st.text_input("🔍 Type a compound or formula", value=st.session_state.selected_formula)

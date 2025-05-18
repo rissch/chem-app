@@ -42,7 +42,7 @@ def display_edu_tools():
     calc = option_menu(
         menu_title="Educational Tools",
         options=["Periodic Table", "Chemical Equations Practice", "Visual Molecule Builder", "Flashcards"],
-        icons=["table", "book", "flask", "lightbulb", "question-circle"],
+        icons=["table", "book", "lightbulb", "question-circle"],
         orientation=orientation
     )
     if calc == "Periodic Table":

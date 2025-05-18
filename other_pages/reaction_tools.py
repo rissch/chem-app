@@ -8,13 +8,24 @@ from chempy.util import periodic
 def display_reaction_tools():
     calc = option_menu(
         menu_title="Reaction Tools",
-        options=["Equation Balancer", "Limiting Reagent", "Reaction Enthalpy", "Reaction Rate", "Equilibrium Constant"],
-        icons=["shuffle", "activity", "flame"],
+        options = [
+            "🔀 Equation Balancer",
+            "⚖️ Limiting Reagent",
+            "🔥 Reaction Enthalpy",
+            "📈 Reaction Rate",
+            "🎛️ Equilibrium Constant"
+        ],
+        icons = [
+            "none",      
+            "none",
+            "none",        
+            "none",  
+            "none"           
+        ],
         orientation="horizontal"
     )
-    st.header(f"{calc} Calculator")
 
-    if calc == "Equation Balancer":
+    if calc == "🔀 Equation Balancer":
     
 
         st.subheader("⚖️ Chemical Equation Balancer")
@@ -59,7 +70,7 @@ def display_reaction_tools():
             except Exception as e:
                 st.error(f"⚠️ Unable to balance the equation. Reason: {e}")
 
-    elif calc == "Limiting Reagent":
+    elif calc == "⚖️ Limiting Reagent":
         st.subheader("⚖️ Limiting Reagent Calculator")
         reactant1_moles = st.number_input("Moles of Reactant 1", min_value=0.0)
         reactant1_coeff = st.number_input("Coefficient of Reactant 1", min_value=1.0)
@@ -76,7 +87,7 @@ def display_reaction_tools():
         else:
             st.success("Both reactants are present in stoichiometric amounts.")
 
-    elif calc == "Reaction Enthalpy":
+    elif calc == "🔥 Reaction Enthalpy":
         st.subheader("🔥 Reaction Enthalpy Calculator")
         st.latex("\Delta H = \Sigma H_{products} - \Sigma H_{reactants}")
         product_enthalpy = st.number_input("Total enthalpy of products (kJ/mol)")
@@ -84,7 +95,7 @@ def display_reaction_tools():
         delta_H = product_enthalpy - reactant_enthalpy
         st.success(f"ΔH = {delta_H:.3f} kJ/mol")
 
-    elif calc == "Reaction Rate":
+    elif calc == "📈 Reaction Rate":
         st.subheader("⚗️ Reaction Rate Calculator")
         st.latex("rate = \Delta [A]/\Delta t")
         delta_conc = st.number_input("Change in concentration Δ[A] (mol/L)")
@@ -96,7 +107,7 @@ def display_reaction_tools():
             rate = delta_conc / delta_time
             st.success(f"Rate = {rate:.3f} mol/L·s")
 
-    elif calc == "Equilibrium Constant":
+    elif calc == "🎛️ Equilibrium Constant":
         st.subheader("⚖️ Equilibrium Constant Calculator")
         st.latex("K = [products]^{coeff} / [reactants]^{coeff}")
         prod_conc = st.number_input("Product concentration (mol/L)", value=1.0)
