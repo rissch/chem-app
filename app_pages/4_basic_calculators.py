@@ -4,15 +4,15 @@ import re
 
 from periodictable import elements
 from rdkit.Chem import Draw
+from rdkit import Chem
 from streamlit_option_menu import option_menu
 from chempy import Reaction
 
-from utils import filter_compounds_with_type, load_compounds
+from utils import filter_compounds_with_type, get_smiles, load_compounds, load_formulas_only
 
+# df = load_compounds()
 
-df = load_compounds()
-
-formulas = df['Formula'].tolist()
+formulas = load_formulas_only()
 # df["mol"] = df["SMILES"].apply(Chem.MolFromSmiles)
 
 
@@ -54,11 +54,11 @@ def molar_mass_calculator():
                 """)
     st.markdown("Enter a **chemical formula** (e.g., `H2O`, `NaCl`, `C6H12O6`) to calculate its molar mass.")
 
-    formula_type = st.selectbox("Select chemical formula type", ["Organic", "Inorganic", "Acid"], index=0, key="formula_type")
+    # formula_type = st.selectbox("Select chemical formula type", ["Organic", "Inorganic", "Acid"], index=0, key="formula_type")
 
-    filtered_compounds = filter_compounds_with_type(formula_type)
+    # filtered_compounds = filter_compounds_with_type(formula_type)
 
-    formula = st.selectbox("Select a chemical formula or write yourself", options=filtered_compounds, index=0)
+    formula = st.selectbox("Select a chemical formula or write yourself", options=formulas, index=0)
     # st.text_input("Chemical Formula", value="H2O")
     
     def parse_formula(formula):
@@ -89,7 +89,8 @@ def molar_mass_calculator():
 
             # Displaying the structure of the compound
             with col2:
-                mol = df[df["Formula"] == formula]["mol"].iloc[0]
+                smiles = get_smiles(formula)
+                mol = Chem.MolFromSmiles(smiles)
                 if mol:
                     st.markdown(f"### ⌬ Structure of {formula}")
                     st.image(Draw.MolToImage(mol), caption=f"Structure of {formula}")
@@ -118,49 +119,7 @@ def stoichiometry_calculator():
     with open("ChemicalEquations.json", "r") as f:
         eqs_list = json.load(f)[0]['formula_examples']
 
-    # User input (use full string for now)
-    # full_input = st.text_input("🔍 Type a compound or formula", value=st.session_state.selected_formula)
     full_input = st.selectbox("🔍 Type a compound or formula", options=eqs_list)
-
-    # # Extract the last word typed
-    # last_term = full_input.strip().split()[-1] if full_input.strip() else ""
-
-    # if full_input != st.session_state.selected_formula:
-    #     st.session_state.selected_formula = full_input
-
-    # # Only search if there's a last term
-    # if last_term:
-    #     matches_startswith = df[
-    #         df['Formula'].str.startswith(last_term)
-    #     ].head(3)
-
-    #     matches_contain = df[
-    #         df['Formula'].str.contains(last_term, case=False)
-    #     ].head(3)
-
-    #     matches = pd.concat([matches_startswith, matches_contain]).drop_duplicates().reset_index(drop=True)
-
-    #     if not matches.empty:
-    #         cols = st.columns(len(matches))  # Create as many columns as there are suggestions
-
-    #         for i, row in matches.iterrows():
-    #             label = f"**{row['Formula']}**"
-    #             with cols[i]:
-    #                 if st.button(label, key=f"suggestion_{i}"):
-    #                     tokens = full_input.strip().split()
-    #                     tokens[-1] = row['Formula']
-    #                     new_input = " ".join(tokens)
-    #                     st.session_state.selected_formula = new_input
-    #                     st.rerun()
-
-    #     else:
-    #         st.info(f"No matches found for '{last_term}'")
-
-
-    # if st.button("Apply"):
-    #     st.session_state.show_stoich = True 
-
-    # if st.session_state.get("show_stoich", False):
     try:
         # Parse the equation
         reaction = Reaction.from_string(full_input)
@@ -187,14 +146,16 @@ def stoichiometry_calculator():
                 col1, col2 = st.columns(2)
                 with col1:
                     st.info(f"**{known_substance}**: {known_moles:.4f} mol")
-                    known_substance_mol = df[df["Formula"] == known_substance]["mol"]
+                    known_substance_smiles = get_smiles(known_substance)
+                    known_substance_mol = Chem.MolFromSmiles(known_substance_smiles)
                     if not known_substance_mol.empty:
                         st.image(Draw.MolToImage(known_substance_mol.iloc[0]), caption=f"Structure of {known_substance}", use_container_width=True)
                     else:
                         st.warning(f"No structure available for {known_substance}.")
                 with col2:
                     st.info(f"**{desired_substance}**: {result:.4f} mol")
-                    desired_substance_mol = df[df["Formula"] == desired_substance]["mol"]
+                    desired_substance_mol = get_smiles(desired_substance)
+                    desired_substance_mol = Chem.MolFromSmiles(desired_substance_mol)
                     if not desired_substance_mol.empty:
                         st.image(Draw.MolToImage(desired_substance_mol.iloc[0]), caption=f"Structure of {desired_substance}", use_container_width=True)
                     else:
@@ -203,8 +164,6 @@ def stoichiometry_calculator():
     except Exception as e:
         st.error(f"Error parsing equation: {e}")
 
-        # if st.button("Reset"):
-        #     st.session_state.show_stoich = False
 
     
 
