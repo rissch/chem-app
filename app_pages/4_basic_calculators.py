@@ -1,10 +1,8 @@
 import json
 import streamlit as st
 import re
-import pandas as pd
 
 from periodictable import elements
-from rdkit import Chem
 from rdkit.Chem import Draw
 from streamlit_option_menu import option_menu
 from chempy import Reaction
@@ -288,3 +286,6 @@ def ppm_calculator():
 
 
     
+
+if __name__ == "__main__":
+    display_basic_calculator()

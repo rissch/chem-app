@@ -72,3 +72,6 @@ def display_analytics_tools():
             pOH = -math.log10(OH)  # Correctly using base-10 logarithm
             pH = 14 - pOH
             st.success(f"pH = {pH:.3f}")
+
+if __name__ == "__main__":
+    display_analytics_tools()

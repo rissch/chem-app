@@ -503,3 +503,6 @@ def display_blogs():
 
             💡 *“The country which is ahead in chemistry will be ahead in wealth and power.”* – William Ramsay
             """)
+
+if __name__ == "__main__":
+    display_blogs()

@@ -1,9 +1,7 @@
 import json
 import streamlit as st
 from streamlit_option_menu import option_menu
-import chempy
 from chempy import balance_stoichiometry
-from chempy.util import periodic
 
 def display_reaction_tools():
     calc = option_menu(
@@ -38,7 +36,8 @@ def display_reaction_tools():
         option = st.checkbox("Enter custom equation", value=False)
         if option:
             user_eq = st.text_input("Enter your equation", key="custom_eq")
-            st.code(f"Example : H2 + O2 -> H2O", language="markdown")
+            st.write("Example")
+            st.code(f"H2 + O2 -> H2O", language="markdown")
         else:
             user_eq = st.selectbox("Select Example Equation", equations.keys())
             st.code(f"Selected : {user_eq}", language="markdown")
@@ -64,7 +63,7 @@ def display_reaction_tools():
                         return ' + '.join([f"{coeffs[chem]} {chem}" if coeffs[chem] != 1 else chem for chem in side])
 
                     balanced_eq = f"{format_side(reactants, reac_coeffs)} -> {format_side(products, prod_coeffs)}"
-                    st.success("✅ Balanced Equation:")
+                    st.success("✅ Balanced Equation")
                     st.code(balanced_eq)
 
             except Exception as e:
@@ -120,3 +119,7 @@ def display_reaction_tools():
         else:
             K = (prod_conc ** prod_coeff) / (reac_conc ** reac_coeff)
             st.success(f"Equilibrium constant K = {K:.3f}")
+
+
+if __name__ == "__main__":
+    display_reaction_tools()

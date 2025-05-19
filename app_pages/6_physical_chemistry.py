@@ -95,3 +95,7 @@ def display_physical_chemistry():
 
         E = h * freq
         st.success(f"Energy = {E:.3e} J")
+
+
+if __name__ == "__main__":
+    display_physical_chemistry()

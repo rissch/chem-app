@@ -1,6 +1,5 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-import streamlit.components.v1 as components
 
 def display_learning_hub():
     selected = option_menu(
@@ -270,8 +269,32 @@ def display_learning_hub():
         # Footer
         st.markdown("---")
         st.success("Keep practicing! Chemistry becomes easier with clear steps and consistent problem solving.")
-    elif selected == "Reference Materials":
-        pass
+    elif selected == "Downloadable Reference Materials":
+        st.title("📥 Downloadable Reference Materials")
+
+        if st.button("Download Basic Chemistry Tutorials & Visuals"):
+            with open("downloadable_reference_files/Basic Chemistry Tutorials & Visuals.pdf", "rb") as file:
+                st.info("Preparing file for download...")
+                file_data = file.read()
+            
+            st.success("File ready for download!")
+            st.download_button(
+                label="Download Example PDF",
+                data=file_data,
+                file_name="Basic Chemistry Tutorials & Visuals.pdf",
+                mime="application/pdf",
+            )
+
+        st.markdown("---")
+
+        with open("downloadable_reference_files/Exam Preparation tips.pdf", "rb") as file:
+            file_data = file.read()
+        st.download_button(
+            label="Download Exam Preparation tips",
+            data=file_data,
+            file_name="Exam Preparation tips.pdf",
+            mime="application/pdf",
+        )
     elif selected == "Visuals and Tutorials":
         st.title("🔬 Basic Chemistry Tutorials & Visuals")
         st.markdown("""
@@ -360,3 +383,7 @@ def display_learning_hub():
         )
 
         st.markdown("---")
+
+
+if __name__ == "__main__":
+    display_learning_hub()

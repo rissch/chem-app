@@ -85,3 +85,6 @@ def display_unit_converters():
 
         result = energy * conversion[from_unit] / conversion[to_unit]
         st.success(f"{energy} {from_unit} = {result:.4f} {to_unit}")
+
+if __name__ == "__main__":
+    display_unit_converters()
