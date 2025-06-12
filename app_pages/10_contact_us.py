@@ -18,8 +18,8 @@ if submitted:
         st.error("Please enter your email.")
     else:
         # Prepare email
-        SMTP_USERNAME = os.getenv("my_email")           # Your Gmail address
-        SMTP_PASSWORD = os.getenv("chemapppassword")    # Your Gmail app password
+        SMTP_USERNAME = os.getenv("social.personalcalc@gmail.com")           # Your Gmail address
+        SMTP_PASSWORD = os.getenv("O!x%ce#E^s9eLHLwkPgWtG8A")    # Your Gmail app password
         email_message = EmailMessage()
         email_message['Subject'] = f"New Contact Form Submission from {name}"
         email_message['From'] = SMTP_USERNAME             # Sender email must be your verified SMTP email
